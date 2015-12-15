@@ -1,0 +1,39 @@
+# Copyright (C) 2014 Embecosm Limited.
+
+# Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
+
+# This file provides supplementary DejaGnu test procs for AAP testing
+
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the Free
+# Software Foundation; either version 3 of the License, or (at your option)
+# any later version.
+
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+# more details.
+
+# You should have received a copy of the GNU General Public License along
+# with this program.  If not, see <http://www.gnu.org/licenses/>.          
+
+# The standard GDB stub procs assume that they are using breakpoints rather
+# than hardware breakpoints, and are also not fully up to date with some of
+# the possible GDB response messages to be matched. The versions here fix
+# those problems.
+
+
+# Note our usage in the log file.
+send_user "Using [pwd]/dg-extra.exp for supplementary proc definitions\n"
+
+
+# Check if we are not LLVM
+
+# Just fails here. A more generic test would work out whether the compiler
+# really was LLVM.
+
+# @param[in] args  Ignored
+# @return 0 to indicate failure
+#proc check_effective_target_not_llvm { args } {
+#    return 0
+#}

@@ -1,0 +1,44 @@
+# AAP specific site.exp
+
+# Copyright (C) 2014 Embecosm Limited.
+# Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
+
+# This file is part of the Embecosm LLVM build system for AAP.
+
+# This file is distributed under the University of Illinois Open Source
+# License. See COPYING for details.
+
+#------------------------------------------------------------------------------
+
+# Explicitly set the target.
+set target_triplet aap-unknown-elf
+set target_alias aap
+
+# Make sure we look in the right place for the board description files. Add
+# our local boards directories
+if ![info exists boards_dir] {
+    lappend boards_dir "[file dirname $env(DEJAGNU)]/dejagnu"
+    lappend boards_dir "[file dirname $env(DEJAGNU)]/dejagnu/baseboards"
+} else {
+    set boards_dir "[file dirname $env(DEJAGNU)]/dejagnu"
+    lappend boards_dir "[file dirname $env(DEJAGNU)]/dejagnu/baseboards"
+}
+
+# $target_list is set by the --target_board option. If it is not set, then we
+# should use $target_triplet to set a single target board in ${target_list}.
+global target_list
+
+case "$target_triplet" in {
+
+    { "aap-*-*" } {
+	if {! [info exists target_list]} {
+	    # Default is to test on the CGEN simulator
+	    set target_list { "aap-sim" }
+	}
+    }
+    
+    default {
+	# Any other triplet is an error.
+	error "Unknown target $target_triplet in site.exp."
+    }
+}

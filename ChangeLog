@@ -1,3 +1,14 @@
+2015-12-15  Simon Cook  <simon.cook@embecosm.com>
+
+	* dejagnu/baseboards/aap-sim.exp: Created.
+	* dejagnu/dg-extra.exp: Likewise.
+	* dejagnu/gdb-extra.exp: Likewise.
+	* dejagnu/gdb-stub-extra.exp: Likewise.
+	* dejagnu/remote-extra.exp: Likewise.
+	* dg-extract-results.sh: Likewise.
+	* run-tests.py: Likewise.
+	* site.exp: Likewise.
+
 2015-04-12  Jeremy Bennett  <jeremy.bennett@embecosm.com>
 
 	* .gitignore: Created.

@@ -1,0 +1,92 @@
+# Board specification for AAP
+
+# Copyright (C) 2015 Embecosm Limited.
+# Contributor Simon Cook <simon.cook@embecosm.com>
+# Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
+
+# This file is part of the Embecosm LLVM build system for AAP.
+
+# This file is distributed under the University of Illinois Open Source
+# License. See COPYING for details.
+
+# This is a list of toolchains that are supported on this board.
+set_board_info target_install  {$target_triplet}
+
+# routines needed to communicate with the board via GDB.
+load_generic_config "gdb_stub"
+
+set gdb_print_return_code "print /u \$R2"
+
+# We need some extra and modified procs for testing through GDB. These
+# supplement or override the standard procs. In particular the result of
+# waiting depends on the argument passed to exit, not just that exit was
+# called and gdb needs to load files into the remote target
+search_and_load_file "library file" "dg-extra.exp" ${boards_dir}
+search_and_load_file "library file" "gdb-stub-extra.exp" ${boards_dir}
+search_and_load_file "library file" "gdb-extra.exp" ${boards_dir}
+search_and_load_file "library file" "remote-extra.exp" ${boards_dir}
+
+# No default multilib options are needed for this board.
+process_multilib_options ""
+
+# It isn't visible in the target triplet, so we set it explicitly.
+set_board_info obj_format "elf"
+
+# The compiler to test. Note this is the installed compiler and should be on
+# the users PATH.
+#set_board_info compiler    "<installdir>/bin/aap-clang"
+set_board_info compiler  "aap-clang"
+set GCC_UNDER_TEST "aap-clang"
+
+# The flavors of debug we support
+set DEBUG_TORTURE_OPTIONS {-gdwarf-2}
+
+# Any custom compiler and link flags.
+# (Here we disable tests that don't work with LLVM and disable caret diagnostics
+# to fix tests for excess errors that do not expect this.)
+set_board_info cflags  "-DDISABLE_BROKENTESTS -fmessage-length=0 -fno-color-diagnostics -fno-caret-diagnostics"
+set_board_info llvm 1
+
+# Wrap around the 'prune_warnings' function in order to remove a clang
+# warning related to unused options during linking.
+rename prune_warnings renamed_prune_warnings
+proc prune_warnings { text } {
+    # Ignore clang warnings about unused options relating to debug information.
+    regsub -all "(^|\n)clang-\[^\n\]*: warning: argument unused during compilation: '-g\[^\n\]*'" $text "" text
+
+    return [ renamed_prune_warnings $text ]
+}
+
+# Default linker script. Have to do this by using -Wl in ldflags.
+set_board_info ldscript ""
+
+# We don't need a status wrapper, we extract the result by looking at
+# registers when we have breakpointed _exit, exit and abort.
+set_board_info needs_status_wrapper 0
+
+# Configure specially for testing via GDB
+set_board_info gdb_run_command "continue"
+set_board_info gdb_protocol  "remote"
+set_board_info gdb,start_symbol "_start"
+set_board_info gdb,remote_timeout "$env(AAP_TIMEOUT)"
+set_board_info use_gdb_stub 1
+set_board_info netport "$env(AAP_NETPORT)"
+
+# GCC tool specific settings. Stack should generally be half the available
+# RAM, but the value is up to the caller. Although other boards set it, it is
+# not clear that text_size has any effect.
+set_board_info gcc,stack_size $env(AAP_STACK_SIZE)
+set_board_info gcc,text_size $env(AAP_TEXT_SIZE)
+set_board_info gcc,no_trampolines 1
+set_board_info gcc,no_pch_tests 1
+set_board_info gcc,keeps_null_pointer_checks 1
+
+# GDB tool specific settings (not needed for now)
+set_board_info gdb,nosignals 1
+set_board_info gdb,noresults 1
+set_board_info gdb,short_int 1
+set_board_info gdb,no_trampolines 1
+set_board_info gdb,noargs 1
+set_board_info gdb,noinferiorio 1
+set_board_info gdb,nofileio 1
+set_board_info debug_flags "-g3"
