@@ -1,4 +1,6 @@
-#!/usr/bin/env python2 -u
+#!/bin/sh
+# we can only rely one one argument without whitespace for interpreter scripts
+/bin/sh -c '/usr/bin/env python2 -u' <<EOF
 
 # Copyright (C) 2015 Embecosm Limited
 # Contributor Simon Cook <simon.cook@embecosm.com>
@@ -202,3 +204,4 @@ def main():
 # Launch
 if __name__ == '__main__':
   main()
+EOF

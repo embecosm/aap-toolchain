@@ -1,3 +1,7 @@
+2016-03-07  Joern Rennecke  <joern.rennecke@embecosm.com>
+
+	* run-tests.py: Fix interpreter script syntax
+
 2015-12-15  Simon Cook  <simon.cook@embecosm.com>
 
 	* dejagnu/baseboards/aap-sim.exp: Created.
