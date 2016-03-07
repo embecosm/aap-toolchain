@@ -120,11 +120,18 @@ def test_schedule():
       '--srcdir=' + srcdir,
       '--target_board=' + test_board, test_set]
     print p_args
-    FNULL = open(os.devnull, 'w')
+    while True:
+      try:
+	FNULL = open(os.devnull, 'w')
+	break
+      except IOError, e:
+	if e.errno != errno.EINTR:
+	  raise
     while True:
       try:
 	p = subprocess.Popen(p_args, env=env, stdout=FNULL,
 			     stderr=subprocess.STDOUT)
+	break
       except IOError, e:
 	if e.errno != errno.EINTR:
 	  raise

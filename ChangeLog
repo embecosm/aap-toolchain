@@ -1,5 +1,10 @@
 2016-03-07  Joern Rennecke  <joern.rennecke@embecosm.com>
 
+	* run-tests.py (test_schedule): Break loop after successfull Popen.
+	retry open for EINTR.
+
+2016-03-07  Joern Rennecke  <joern.rennecke@embecosm.com>
+
 	* run-tests.py (srcdir): Expect tests in gcc.
 	(test_schedule): Retry for EINTR / EAGAIN.
 
