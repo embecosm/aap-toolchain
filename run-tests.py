@@ -20,7 +20,7 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.          
 
-import glob, os, subprocess, signal, threading, time
+import glob, os, subprocess, signal, threading, time, errno
 
 ########################
 # CONFIG, TO BE EDITED
@@ -36,7 +36,7 @@ text_size = 32768
 basedir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 startdir = basedir + '/toolchain'
 DEJAGNU = startdir + '/site.exp'
-srcdir = basedir + '/gcc-tests/gcc/testsuite'
+srcdir = basedir + '/gcc/gcc/testsuite'
 resdir = basedir + '/gcc-results/' + time.strftime('%F-%H%M')
 
 
@@ -121,8 +121,16 @@ def test_schedule():
       '--target_board=' + test_board, test_set]
     print p_args
     FNULL = open(os.devnull, 'w')
-    p = subprocess.Popen(p_args, env=env, stdout=FNULL,
-                         stderr=subprocess.STDOUT)
+    while True:
+      try:
+	p = subprocess.Popen(p_args, env=env, stdout=FNULL,
+			     stderr=subprocess.STDOUT)
+      except IOError, e:
+	if e.errno != errno.EINTR:
+	  raise
+      except OSError, e:
+	if e.errno != errno.EAGAIN:
+	  raise
 
     print '(' + str(test_count) + ') ' 'Starting process', test, \
           '( pid:', p.pid, ')', '( server:', server, '),', \
