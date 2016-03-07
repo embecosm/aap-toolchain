@@ -35,8 +35,8 @@ set_board_info obj_format "elf"
 # The compiler to test. Note this is the installed compiler and should be on
 # the users PATH.
 #set_board_info compiler    "<installdir>/bin/aap-clang"
-set_board_info compiler  "aap-clang"
-set GCC_UNDER_TEST "aap-clang"
+set_board_info compiler  "aap-cc"
+set GCC_UNDER_TEST "aap-cc"
 
 # The flavors of debug we support
 set DEBUG_TORTURE_OPTIONS {-gdwarf-2}

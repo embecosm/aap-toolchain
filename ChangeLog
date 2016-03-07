@@ -1,5 +1,11 @@
 2016-03-07  Joern Rennecke  <joern.rennecke@embecosm.com>
 
+	* dejagnu/baseboards/aap-sim.exp (set_board_info compiler)
+	Set to aap-cc.
+	(GCC_UNDER_TEST): Likewise.
+
+2016-03-07  Joern Rennecke  <joern.rennecke@embecosm.com>
+
 	* run-tests.py (test_schedule): Break loop after successfull Popen.
 	retry open for EINTR.
 
