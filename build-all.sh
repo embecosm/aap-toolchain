@@ -509,6 +509,7 @@ then
     then
 	header "Configuring Clang & LLVM"
 	if ! cmake -DCMAKE_BUILD_TYPE=Debug -DLLVM_ENABLE_ASSERTIONS=ON \
+                -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD="AAP" \
                 -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=${installdir} \
 	        -G "Unix Makefiles" ../../llvm >> ${logfile} 2>&1
 	then

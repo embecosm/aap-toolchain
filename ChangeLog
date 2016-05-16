@@ -1,3 +1,8 @@
+2016-05-16  Edward Jones  <ed.jones@embecosm.com>
+
+	* build-all.sh: Set AAP in EXPERIMENTAL_TARGETS_TO_BUILD when
+	configuring LLVM.
+
 2016-03-07  Joern Rennecke  <joern.rennecke@embecosm.com>
 
 	* dejagnu/baseboards/aap-sim.exp (set_board_info compiler)
