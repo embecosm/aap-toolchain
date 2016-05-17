@@ -1,2 +1,5 @@
 *~
 *.pdf
+*.log
+*.sum
+*.exe

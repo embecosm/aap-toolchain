@@ -32,11 +32,10 @@ case "$target_triplet" in {
 
     { "aap-*-*" } {
 	if {! [info exists target_list]} {
-	    # Default is to test on the CGEN simulator
-	    set target_list { "aap-sim" }
+	    set target_list { "aap-run" }
 	}
     }
-    
+
     default {
 	# Any other triplet is an error.
 	error "Unknown target $target_triplet in site.exp."
