@@ -1,3 +1,19 @@
+2016-05-17  Graham Markall  <graham.markall@embecosm.com>
+
+	* dejagnu/baseboards/aap-run.exp: Added basic config of aap-run
+	baseboard.
+	* run-tests.sh: Added script to invoke GCC C torture tests using
+	aap-run and DejaGnu.
+	* site.exp: Use aap-run instead of aap-sim.
+	* .gitignore: Exclude DejaGnu output (.log, .sum and .exe files)
+	* dejagnu/baseboards/aap-sim.exp: Deleted.
+	* dejagnu/dg-extra.exp: Deleted.
+	* dejagnu/gdb-extra.exp: Deleted.
+	* dejagnu/gdb-stub-extra.exp: Deleted.
+	* dejagnu/remote-extra.exp: Deleted.
+	* run-tests.py: Deleted.
+
+
 2016-05-16  Edward Jones  <ed.jones@embecosm.com>
 
 	* build-all.sh: Set AAP in EXPERIMENTAL_TARGETS_TO_BUILD when
