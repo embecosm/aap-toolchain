@@ -49,6 +49,8 @@
 #   clang
 #   llvm
 #   toolchain
+#   newlib
+#   compiler-rt
 
 # With clang symbolically linked into the tools subdirectory of the llvm
 # repository. The directory containing this is referred to as the "top level
