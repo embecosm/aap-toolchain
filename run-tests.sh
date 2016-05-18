@@ -19,12 +19,15 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# This script assumes that build-all.sh has been run and completed successfully,
+# and that gcc is cloned next to the other repositories with the test-override
+# branch checked out.
 
 # Set the top level directory.
 d=`dirname "$0"`
 topdir=`(cd "$d/.." && pwd)`
 
-export DEJAGNU=${topdir}/aap-tooling/site.exp
+export DEJAGNU=${topdir}/toolchain/site.exp
 export testsuite=${topdir}/gcc/gcc/testsuite
 export test_board=aap-run
 export runtestflags=""

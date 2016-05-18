@@ -1,6 +1,7 @@
 2016-05-18  Graham Markall <graham.markall@embecosm.com>
 
 	* build-all.sh: Update list of expected repositories
+	* run-tests.sh: Use canonical name for toolchain folder
 
 2016-05-18  Edward Jones  <ed.jones@embecosm.com>
 
