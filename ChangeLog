@@ -1,3 +1,8 @@
+2016-05-18  Edward Jones  <ed.jones@embecosm.com>
+
+	* override-manifest: Added basic override manifest to be used with
+	custom DejaGnu.
+
 2016-05-17  Graham Markall  <graham.markall@embecosm.com>
 
 	* dejagnu/baseboards/aap-run.exp: Added basic config of aap-run
