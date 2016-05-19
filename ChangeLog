@@ -1,3 +1,9 @@
+2016-05-19  Graham Markall <graham.markall@embecosm.com>
+
+	* run-tests.sh: Run tests with override manifest
+	* dejagnu/baseboards/aap-run.exp: Run aap-run with a 5 second timeout
+	to get past tests that enter infinite loops.
+
 2016-05-19  Jeremy Bennett  <jeremy.bennett@embecosm.com>
 
 	* clone-all.sh: Created.

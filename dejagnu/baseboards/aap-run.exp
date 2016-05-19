@@ -31,7 +31,10 @@ set_board_info llvm 1
 # Default linker script. Have to do this by using -Wl in ldflags.
 set_board_info ldscript ""
 
+# We specify a 5 second timeout because several tests wander off into infinite
+# loops at present
 set_board_info sim "aap-run"
+set_board_info sim,options "--timeout=5"
 
 # Over-write the flags run for every test with the LLVM equivalents.
 # (These are originally defined in gcc/gcc/testsuite/lib/prune.exp)

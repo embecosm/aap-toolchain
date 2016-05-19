@@ -41,5 +41,6 @@ runtest --tool=gcc \
         --target-board=${test_board} \
         --directory=${srcdir}/${test_dir} \
         --srcdir=${srcdir} \
+        --override_manifest=override-manifest \
         ${runtestflags} \
         ${test_set}
