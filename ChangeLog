@@ -1,3 +1,7 @@
+2016-05-19  Jeremy Bennett  <jeremy.bennett@embecosm.com>
+
+	* clone-all.sh: Created.
+
 2016-05-18  Graham Markall <graham.markall@embecosm.com>
 
 	* build-all.sh: Update list of expected repositories
