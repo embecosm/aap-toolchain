@@ -3,3 +3,6 @@
 *.log
 *.sum
 *.exe
+*.pyc
+__pycache__
+test-output
