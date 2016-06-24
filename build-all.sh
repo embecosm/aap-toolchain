@@ -481,13 +481,18 @@ echo "  datestamp=${datestamp}" >> "${logfile}" 2>&1
 echo "  target_cflags=${target_cflags}" >> "${logfile}" 2>&1
 
 # Checkout the correct branch for each tool
-header "Checking out GIT trees"
-if ! ${topdir}/toolchain/get-versions.sh ${topdir} ${version_file} \
-        ${autocheckout} ${autopull} >> ${logfile} 2>&1
+if ! [ -d ${topdir}/.repo ]
 then
-    echo "ERROR: Failed to checkout GIT versions of tools."
-    echo "- see ${logfile}"
-    exit 1
+    header "Checking out GIT trees"
+    if ! ${topdir}/toolchain/get-versions.sh ${topdir} ${version_file} \
+            ${autocheckout} ${autopull} >> ${logfile} 2>&1
+    then
+        echo "ERROR: Failed to checkout GIT versions of tools."
+        echo "- see ${logfile}"
+        exit 1
+    fi
+else
+    header "Repo manifest detected - not performing git operations"
 fi
 
 #------------------------------------------------------------------------------
