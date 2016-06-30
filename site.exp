@@ -53,6 +53,17 @@ set fp [open [file dirname $env(DEJAGNU)]/output-tests.txt]
 set message_tests [read $fp]
 close $fp
 
+# Read in the list of tests that contain unsupported language constructs. List
+# generated with:
+#
+# egrep "(asm goto|__builtin_)" {g++,gcc}.dg/* -R | \
+#     awk 'BEGIN { FS=":" } { print $1 }' | sort | uniq 
+
+set fp [open [file dirname $env(DEJAGNU)]/bad-language.txt]
+set bad_language_tests [read $fp]
+close $fp
+
+
 # Any test using any of these flags should be marked UNSUPPORTED - they are
 # not supported by LLVM / Clang.
 set unsupported_flags {
@@ -337,6 +348,7 @@ set unsupported_flags {
 proc query_override { test_name flags subtest line_num } {
     global unsupported_flags
     global message_tests
+    global bad_language_tests
 
     # Check for unsupported flags
     foreach flag $unsupported_flags {
@@ -350,6 +362,13 @@ proc query_override { test_name flags subtest line_num } {
     # Check if the test checks the compiler messages
     foreach message_test $message_tests {
         if { [ string trim $message_test ] == $test_name } {
+            return "UNSUPPORTED"
+        }
+    }
+
+    # Check to see if the test tests an unsupported language construct / function
+    foreach bad_language_test $bad_language_tests {
+        if { [ string trim $bad_language_test ] == $test_name } {
             return "UNSUPPORTED"
         }
     }
