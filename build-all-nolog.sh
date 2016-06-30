@@ -38,6 +38,7 @@
 #                  [--gnu | --no-gnu]
 #                  [--newlib | --no-newlib]
 #                  [--gdbserver | --no-gdbserver]
+#                  [--dejagnu | --no-dejagnu]
 #                  [--rebuild-libs]
 #                  [--target-cflags]
 
@@ -47,6 +48,7 @@
 #   gdbserver
 #   binutils-gdb
 #   clang
+#   dejagnu
 #   llvm
 #   toolchain
 #   newlib
@@ -148,6 +150,10 @@
 
 #     If set, build gdbserver (default --gdbserver).
 
+# --dejagnu | --no-dejagnu
+
+#     If set, build dejagnu (default --dejagnu).
+
 # --rebuild-libs
 
 #     If set clean and rebuild libraries (newlib, libgloss, CompilerRT).
@@ -246,6 +252,7 @@ dollvm="--llvm"
 dognu="--gnu"
 donewlib="--newlib"
 dogdbserver="--gdbserver"
+dodejagnu="--dejagnu"
 rebuildlibs="no"
 target_cflags="-Os -g"
 
@@ -321,6 +328,10 @@ case ${opt} in
 	dogdbserver=$1
 	;;
 
+    --dejagnu | --no-dejagnu)
+	dodejagnu=$1
+	;;
+
     --rebuild-libs)
 	rebuildlibs=$1
 	;;
@@ -363,6 +374,7 @@ builddir_llvm=${builddir}/llvm
 builddir_gnu=${builddir}/gnu
 builddir_newlib=${builddir}/newlib
 builddir_gdbserver=${builddir}/gdbserver
+builddir_dejagnu=${builddir}/dejagnu
 
 if [ "x${doclean}" = "x--clean" ]
 then
@@ -387,6 +399,11 @@ then
     then
 	rm -rf ${builddir_gdbserver}
     fi
+
+    if [ \( "x${dodejagnu}" = "x--dejagnu" \) ]
+    then
+	rm -rf ${builddir_dejagnu}
+    fi
 fi
 
 if [ "x${rebuildlibs}" = "x--rebuild-libs" ]
@@ -399,6 +416,7 @@ mkdir -p ${builddir_llvm}
 mkdir -p ${builddir_gnu}
 mkdir -p ${builddir_newlib}
 mkdir -p ${builddir_gdbserver}
+mkdir -p ${builddir_dejagnu}
 
 # Add a datestamp to the install directory if necessary. But if we are using
 # --no-clean, we should reuse the installdir from the existing configuration.
@@ -733,6 +751,50 @@ then
 	exit 1
     fi
 fi
+
+#------------------------------------------------------------------------------
+#
+#				  dejagnu
+#
+#------------------------------------------------------------------------------
+
+if [ "x${dodejagnu}" = "x--dejagnu" ]
+then
+    # Optionally configure dejagnu. This should be generic for Linux,
+    # Cygwin and MinGW. Only if we are doing a clean build or we haven't
+    # previously configured.
+    cd ${builddir_dejagnu}
+    if [ \( "x${doclean}" = "x--clean" \) -o \( ! -e config.log \) ]
+    then
+	echo "Configuring dejagnu"
+	if ! ${topdir}/dejagnu/configure \
+	     --prefix=${installdir}
+	then
+	    echo "ERROR: Configuration of dejagnu failed."
+	    exit 1
+	fi
+    fi
+
+    # Build dejagnu. For now don't try to do in parallel, but should
+    # work (needs testing).
+    echo "Building dejagnu"
+    cd ${builddir_dejagnu}
+    if ! make
+    then
+	echo "ERROR: Build of dejagnu failed."
+	exit 1
+    fi
+
+    # Install dejagnu
+    echo "Installing dejagnu"
+    cd ${builddir_dejagnu}
+    if ! make install
+    then
+	echo "ERROR: Install of dejagnu failed."
+	exit 1
+    fi
+fi
+
 
 #------------------------------------------------------------------------------
 #
