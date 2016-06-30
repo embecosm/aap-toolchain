@@ -42,6 +42,17 @@ case "$target_triplet" in {
     }
 }
 
+# Read in the list of tests that try to examine the compiler's messages (e.g.
+# warnings, errors, etc.). The list can be generated for a new GCC with the
+# following:
+#
+# egrep "(dg-message|dg-warning|dg-error)" {g++,gcc}.dg/* -R | \
+#     awk 'BEGIN { FS=":" } { print $1 }' | sort | uniq
+
+set fp [open [file dirname $env(DEJAGNU)]/output-tests.txt]
+set message_tests [read $fp]
+close $fp
+
 # Any test using any of these flags should be marked UNSUPPORTED - they are
 # not supported by LLVM / Clang.
 set unsupported_flags {
@@ -325,6 +336,7 @@ set unsupported_flags {
 
 proc query_override { test_name flags subtest line_num } {
     global unsupported_flags
+    global message_tests
 
     # Check for unsupported flags
     foreach flag $unsupported_flags {
@@ -334,5 +346,13 @@ proc query_override { test_name flags subtest line_num } {
             }
         }
     }
+
+    # Check if the test checks the compiler messages
+    foreach message_test $message_tests {
+        if { [ string trim $message_test ] == $test_name } {
+            return "UNSUPPORTED"
+        }
+    }
+
     return "ABSENT"
 }
