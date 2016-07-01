@@ -56,7 +56,7 @@ close $fp
 # Read in the list of tests that contain unsupported language constructs. List
 # generated with:
 #
-# egrep "(asm goto|__builtin_)" {g++,gcc}.dg/* -R | \
+# egrep "(asm goto|__builtin_)" {g++.dg,gcc.dg,gcc.c-torture}/* -R | \
 #     awk 'BEGIN { FS=":" } { print $1 }' | sort | uniq 
 
 set fp [open [file dirname $env(DEJAGNU)]/bad-language.txt]
@@ -67,6 +67,13 @@ close $fp
 # Any test using any of these flags should be marked UNSUPPORTED - they are
 # not supported by LLVM / Clang.
 set unsupported_flags {
+    "-fgnu89-inline"
+    "-funroll-all-loops"
+    "-finline-functions"
+}
+
+# List of flags compiled for the original override manifest
+set eds_unsupported_flags {
     "-finput-charset=utf-8"
     "-flto"
     "-fallow-parameterless-variadic-functions"
@@ -354,6 +361,10 @@ proc initialize_override {} {
     proc check_effective_target_label_values {} {
         return 0
     }
+
+    proc check_effective_target_alloca {} {
+        return 0
+    }
 }
 
 proc query_override { test_name flags subtest line_num } {
@@ -362,13 +373,13 @@ proc query_override { test_name flags subtest line_num } {
     global bad_language_tests
 
     # Check for unsupported flags
-    #foreach flag $unsupported_flags {
-    #    foreach test_flag $flags {
-    #        if { [ string trim $test_flag ] == $flag } {
-    #            return "UNSUPPORTED"
-    #        }
-    #    }
-    #}
+    foreach flag $unsupported_flags {
+        foreach test_flag $flags {
+            if { [ string trim $test_flag ] == $flag } {
+                return "UNSUPPORTED"
+            }
+        }
+    }
 
     # Check if the test checks the compiler messages
     foreach message_test $message_tests {
