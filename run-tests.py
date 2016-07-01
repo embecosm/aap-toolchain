@@ -116,11 +116,12 @@ class TestManager(object):
     The TestManager maintains the list of the tests that need to be run for a
     particular test set.
     '''
-    def __init__(self, test_set):
+    def __init__(self, test_set, test_only):
         self._tests_lock = Lock()
         self._tests = None
         self._current_run = 0
         self._test_set = test_set
+        self._test_only = test_only
 
     def find_tests(self):
         '''
@@ -132,6 +133,13 @@ class TestManager(object):
             found += [ os.path.relpath(os.path.join(path, name), start=root)
                            for name in files if name[-2:] in ('.c', '.C') ]
         print("Discovered %s test files" % len(found))
+
+        if self._test_only:
+            print(self._test_only)
+            found = [ test for test in found if test in self._test_only ]
+            print("Only running tests explicitly specified:")
+            print("\n".join(found))
+
         self._tests = found
 
     def pop_tests(self, ntests):
@@ -268,7 +276,14 @@ def print_summary():
         print("".join(summary))
 
 
-def main(args):
+def main():
+
+    from argparse import ArgumentParser
+    parser = ArgumentParser()
+    parser.add_argument('-t', '--tests', nargs='+',
+                        help='Tests to run explicitly')
+    args = parser.parse_args()
+
     # Prepare output directory
     if os.path.exists(OUTPUT_DIR):
         rmtree(OUTPUT_DIR)
@@ -276,7 +291,7 @@ def main(args):
 
     for test_set in TEST_SETS:
         # Set up the test manager
-        tm = TestManager(test_set)
+        tm = TestManager(test_set, args.tests)
         tm.find_tests()
 
         # Use a set of workers to execute tests in parallel
@@ -305,6 +320,8 @@ def main(args):
 
     print_summary()
 
+    return 0
+
 
 if __name__ == '__main__':
-    sys.exit(main(sys.argv))
+    sys.exit(main())
