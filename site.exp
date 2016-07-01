@@ -70,6 +70,7 @@ set unsupported_flags {
     "-fgnu89-inline"
     "-funroll-all-loops"
     "-finline-functions"
+    "-fmodulo-sched"
 }
 
 # List of flags compiled for the original override manifest
@@ -367,7 +368,7 @@ proc initialize_override {} {
     }
 }
 
-proc query_override { test_name flags subtest line_num } {
+proc query_override { test_name flags extra_flags subtest line_num } {
     global unsupported_flags
     global message_tests
     global bad_language_tests
@@ -375,6 +376,16 @@ proc query_override { test_name flags subtest line_num } {
     # Check for unsupported flags
     foreach flag $unsupported_flags {
         foreach test_flag $flags {
+            if { [ string trim $test_flag ] == $flag } {
+                return "UNSUPPORTED"
+            }
+        }
+    }
+
+    # Check for unsupported flags in the list of extra options
+    set extra_flags_list [ split $extra_flags ]
+    foreach flag $unsupported_flags {
+        foreach test_flag $extra_flags_list {
             if { [ string trim $test_flag ] == $flag } {
                 return "UNSUPPORTED"
             }
