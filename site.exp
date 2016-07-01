@@ -345,19 +345,30 @@ set unsupported_flags {
     "-gxcoff"
 }
 
+
+proc initialize_override {} {
+    proc check_effective_target_lto {} {
+        return 0
+    }
+
+    proc check_effective_target_label_values {} {
+        return 0
+    }
+}
+
 proc query_override { test_name flags subtest line_num } {
     global unsupported_flags
     global message_tests
     global bad_language_tests
 
     # Check for unsupported flags
-    foreach flag $unsupported_flags {
-        foreach test_flag $flags {
-            if { [ string trim $test_flag ] == $flag } {
-                return "UNSUPPORTED"
-            }
-        }
-    }
+    #foreach flag $unsupported_flags {
+    #    foreach test_flag $flags {
+    #        if { [ string trim $test_flag ] == $flag } {
+    #            return "UNSUPPORTED"
+    #        }
+    #    }
+    #}
 
     # Check if the test checks the compiler messages
     foreach message_test $message_tests {
