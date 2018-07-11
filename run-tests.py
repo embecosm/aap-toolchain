@@ -40,6 +40,7 @@ TOOLCHAIN = os.path.join(TOPDIR, 'toolchain')
 DG_EXTRACT_RESULTS = os.path.join(TOPDIR, 'gcc', 'contrib', 'dg-extract-results.py')
 OVERRIDE_MANIFEST = os.path.join(TOOLCHAIN, 'override-manifest')
 OUTPUT_DIR = os.path.join(TOOLCHAIN, 'test-output')
+TEST_TOOL = 'aap-cc'
 TEST_BOARD = 'aap-run'
 RUNTEST_FLAGS = []
 
@@ -189,9 +190,10 @@ def runtests(i, test_set, tests):
     args = [
         'runtest',
         '--tool=%s' % test_set.tool,
+        '--tool_exec=%s' % TEST_TOOL,
         '--directory=%s' % os.path.join(TEST_SUITE, set_dir),
         '--srcdir=%s' % TEST_SUITE,
-        '--override_manifest=%s' % OVERRIDE_MANIFEST,
+        '--target_board=%s' % TEST_BOARD,
         '%s=%s' % (test_set.expect_file, test_list) ]
     args += RUNTEST_FLAGS
 
