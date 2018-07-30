@@ -1,19 +1,19 @@
 ==============================================================================
-LLVM Release License
+AAP Tooling Release License
 ==============================================================================
 University of Illinois/NCSA
 Open Source License
 
-Copyright (c) 2003-2013 University of Illinois at Urbana-Champaign.
+Copyright (c) 2018 Embecosm Limited.
 All rights reserved.
 
 Developed by:
 
-    LLVM Team
+    Embecosm Team
 
-    University of Illinois at Urbana-Champaign
+    Embecosm Limited
 
-    http://llvm.org
+    http://www.embecosm.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal with
@@ -29,10 +29,9 @@ so, subject to the following conditions:
       this list of conditions and the following disclaimers in the
       documentation and/or other materials provided with the distribution.
 
-    * Neither the names of the LLVM Team, University of Illinois at
-      Urbana-Champaign, nor the names of its contributors may be used to
-      endorse or promote products derived from this Software without specific
-      prior written permission.
+    * Neither the names of the Embecosm Team, Embecosm Limited, nor the names
+      of its contributors may be used to endorse or promote products derived
+      from this Software without specific prior written permission.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
@@ -43,24 +42,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS WITH THE
 SOFTWARE.
 
 ==============================================================================
-Copyrights and Licenses for Third Party Software Distributed with LLVM:
+Copyrights and Licenses for Third Party Software Distributed with AAP Tooling:
 ==============================================================================
-The LLVM software contains code written by third parties.  Such software will
-have its own individual LICENSE.TXT file in the directory in which it appears.
-This file will describe the copyrights, license, and restrictions which apply
-to that code.
+The AAP Tooling software contains code written by third parties.  Such software
+will have its own individual LICENSE.TXT file in the directory in which it
+appears. This file will describe the copyrights, license, and restrictions which
+apply to that code.
 
 The disclaimer of warranty in the University of Illinois Open Source License
-applies to all code in the LLVM Distribution, and nothing in any of the
-other licenses gives permission to use the names of the LLVM Team or the
-University of Illinois to endorse or promote products derived from this
-Software.
+applies to all code in the AAP Tooling Distribution, and nothing in any of the
+other licenses gives permission to use the names of the Embecosm Team or
+Embecosm Limited to endorse or promote products derived from this Software.
 
 The following pieces of software have additional or alternate copyrights,
 licenses, and/or restrictions:
 
 Program                License      Directory
 -------                -------      ---------
-dg-extract-results.sh  GPLv3
 DejaGnu                GPLv3        dejagnu
-Design docs   	       Proprietary  design-docs

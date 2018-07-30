@@ -1,5 +1,10 @@
 2018-07-30  Edward Jones  <ed.jones@embecosm.com>
 
+	* COPYING: Update references in license file to refer to Embecosm
+	instead of LLVM.
+
+2018-07-30  Edward Jones  <ed.jones@embecosm.com>
+
 	* run-tests.py: Remove OVERRIDE_MANIFEST variable.
 	(DG_TESTS): Add torture tests to the test set to run, remove
 	tls tests.
