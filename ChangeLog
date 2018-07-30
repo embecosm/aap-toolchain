@@ -1,3 +1,7 @@
+2018-07-30  Edward Jones  <ed.jones@embecosm.com>
+
+	* build-all.sh: Disable threading in LLVM build.
+
 2016-05-19  Graham Markall <graham.markall@embecosm.com>
 
 	* run-tests.sh: Run tests with override manifest
