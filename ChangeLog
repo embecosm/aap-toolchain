@@ -1,5 +1,10 @@
 2018-07-30  Edward Jones  <ed.jones@embecosm.com>
 
+	* omitted-tests: Remove unncessary file.
+	* override-manifest: Likewise.
+
+2018-07-30  Edward Jones  <ed.jones@embecosm.com>
+
 	* COPYING: Update references in license file to refer to Embecosm
 	instead of LLVM.
 
