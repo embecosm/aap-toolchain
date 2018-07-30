@@ -1,5 +1,12 @@
 2018-07-30  Edward Jones  <ed.jones@embecosm.com>
 
+	* run-tests.py: Remove OVERRIDE_MANIFEST variable.
+	(DG_TESTS): Add torture tests to the test set to run, remove
+	tls tests.
+	(TEST_SETS): Remove CXX_TESTS from the tests to run.
+
+2018-07-30  Edward Jones  <ed.jones@embecosm.com>
+
 	* build-all.sh: Disable threading in LLVM build.
 
 2016-05-19  Graham Markall <graham.markall@embecosm.com>

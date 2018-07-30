@@ -38,7 +38,6 @@ TOPDIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 TEST_SUITE = os.path.join(TOPDIR, 'gcc', 'gcc', 'testsuite')
 TOOLCHAIN = os.path.join(TOPDIR, 'toolchain')
 DG_EXTRACT_RESULTS = os.path.join(TOPDIR, 'gcc', 'contrib', 'dg-extract-results.py')
-OVERRIDE_MANIFEST = os.path.join(TOOLCHAIN, 'override-manifest')
 OUTPUT_DIR = os.path.join(TOOLCHAIN, 'test-output')
 TEST_TOOL = 'aap-cc'
 TEST_BOARD = 'aap-run'
@@ -71,7 +70,6 @@ TORTURE_TESTS = [
 # goacc-gomp:  GNU OpenACC support
 # cpp/trad:    Traditional preprocessor mode
 # vect:        Vector instructions
-# torture:     <<< Need to look at this again >>>
 # charset:     IBM 1047 charset
 # compat:      Test compatibility of code from two compilers linked together
 # guality:     Test the quality of debug information
@@ -94,17 +92,17 @@ DG_TESTS = [
     TestSet('gcc', 'gcc.dg', 'simulate-thread', 'simulate-thread.exp'),
     # Things that should not compile
     TestSet('gcc', 'gcc.dg', 'noncompile', 'noncompile.exp'),
+    # Torture tests
+    TestSet('gcc', 'gcc.dg', 'torture', 'dg-torture.exp'),
     # Weak symbols
     TestSet('gcc', 'gcc.dg', 'weak', 'weak.exp'),
-    # Thread-local storage
-    TestSet('gcc', 'gcc.dg', 'tls', 'tls.exp'),
 ]
 
 CXX_TESTS = [
     TestSet('g++', 'g++.dg', '', 'dg.exp')
 ]
 
-TEST_SETS = CXX_TESTS + TORTURE_TESTS + DG_TESTS
+TEST_SETS = TORTURE_TESTS + DG_TESTS
 
 # The number of tests to pass to a single Dejagnu invocation at once
 DG_INSTANCE_NTESTS = 20
